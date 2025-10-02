@@ -1,8 +1,17 @@
-# Für lokales Testen (keine Git-Integration erforderlich)
+# Lokales Backend - speichert direkt in Dateien, kein Login nötig
 backend:
-  name: test-repo
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
+  branch: main
 
-# Für Produktion mit Git Gateway:
+# Editorial Workflow: Draft → Review → Publish
+publish_mode: editorial_workflow
+
+# Test-Modus (nur Browser-Speicher):
+# backend:
+#   name: test-repo
+
+# Production (mit Netlify):
 # backend:
 #   name: git-gateway
 #   branch: main
