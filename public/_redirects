@@ -1,0 +1,3 @@
+# Fix Netlify Identity invite/recovery links
+/#invite_token=*  /admin/#invite_token=:splat  301
+/#recovery_token=*  /admin/#recovery_token=:splat  301
