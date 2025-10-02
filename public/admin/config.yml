@@ -1,0 +1,49 @@
+# Für lokales Testen (keine Git-Integration erforderlich)
+backend:
+  name: test-repo
+
+# Für Produktion mit Git Gateway:
+# backend:
+#   name: git-gateway
+#   branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog-Artikel"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "string" }
+      - { label: "Veröffentlichungsdatum", name: "pubDate", widget: "datetime" }
+      - { label: "Autor", name: "author", widget: "string", default: "Steuerberaterin" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - { label: "Text", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "Seiten"
+    files:
+      - label: "Startseite"
+        name: "home"
+        file: "src/content/pages/home.md"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - { label: "Untertitel", name: "subtitle", widget: "string" }
+          - { label: "Willkommenstext", name: "welcome", widget: "markdown" }
+
+      - label: "Leistungen"
+        name: "services"
+        file: "src/content/pages/services.md"
+        fields:
+          - { label: "Titel", name: "title", widget: "string" }
+          - label: "Leistungen"
+            name: "services_list"
+            widget: "list"
+            fields:
+              - { label: "Titel", name: "title", widget: "string" }
+              - { label: "Beschreibung", name: "description", widget: "text" }
+              - { label: "Icon", name: "icon", widget: "string", default: "📊" }

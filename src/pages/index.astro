@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const homeData = await getEntry('pages', 'home');
+const frontmatter = homeData?.data;
+---
+
+<Layout title="Startseite - Steuerberatung">
+	<div class="hero">
+		<h1>{frontmatter?.title || 'Willkommen'}</h1>
+		<p class="subtitle">{frontmatter?.subtitle || ''}</p>
+	</div>
+
+	<div class="welcome">
+		<div set:html={frontmatter?.welcome || ''} />
+	</div>
+
+	<div class="cta">
+		<h2>Vereinbaren Sie einen Termin</h2>
+		<p>Ich berate Sie gerne persönlich zu allen steuerlichen Fragen.</p>
+		<a href="/kontakt" class="button">Kontakt aufnehmen</a>
+	</div>
+</Layout>
+
+<style>
+	.hero {
+		text-align: center;
+		padding: 3rem 0;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		border-radius: 8px;
+		margin-bottom: 2rem;
+	}
+	.hero h1 {
+		font-size: 2.5rem;
+		margin: 0 0 1rem 0;
+	}
+	.subtitle {
+		font-size: 1.25rem;
+		opacity: 0.9;
+	}
+	.welcome {
+		background: #f9fafb;
+		padding: 2rem;
+		border-radius: 8px;
+		margin-bottom: 2rem;
+		line-height: 1.6;
+	}
+	.cta {
+		text-align: center;
+		padding: 3rem 2rem;
+		background: #f4f4f5;
+		border-radius: 8px;
+	}
+	.cta h2 {
+		margin-top: 0;
+	}
+	.button {
+		display: inline-block;
+		background: #0066cc;
+		color: white;
+		padding: 0.75rem 2rem;
+		border-radius: 4px;
+		text-decoration: none;
+		font-weight: 600;
+		transition: background 0.3s;
+	}
+	.button:hover {
+		background: #004d99;
+	}
+</style>

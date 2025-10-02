@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+	const blogPosts = await getCollection('blog');
+	return blogPosts.map(post => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={`${post.data.title} - Steuerberatung`}>
+	<article class="blog-post">
+		<header>
+			<h1>{post.data.title}</h1>
+			<p class="meta">
+				{post.data.pubDate.toLocaleDateString('de-DE', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric'
+				})} • {post.data.author}
+			</p>
+		</header>
+
+		{post.data.image && (
+			<img src={post.data.image} alt={post.data.title} class="hero-image" />
+		)}
+
+		<div class="content">
+			<Content />
+		</div>
+
+		<footer>
+			<a href="/blog" class="back-link">← Zurück zur Übersicht</a>
+		</footer>
+	</article>
+</Layout>
+
+<style>
+	.blog-post {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+	header {
+		margin-bottom: 2rem;
+	}
+	h1 {
+		color: #27272a;
+		font-size: 2.5rem;
+		margin: 0 0 1rem 0;
+	}
+	.meta {
+		color: #71717a;
+		font-size: 1rem;
+	}
+	.hero-image {
+		width: 100%;
+		height: 400px;
+		object-fit: cover;
+		border-radius: 8px;
+		margin-bottom: 2rem;
+	}
+	.content {
+		line-height: 1.8;
+		font-size: 1.1rem;
+	}
+	.content :global(h2) {
+		color: #0066cc;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+	.content :global(h3) {
+		color: #27272a;
+		margin-top: 1.5rem;
+		margin-bottom: 0.75rem;
+	}
+	.content :global(ul) {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+	.content :global(li) {
+		margin: 0.5rem 0;
+	}
+	.content :global(strong) {
+		color: #0066cc;
+	}
+	footer {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid #e5e7eb;
+	}
+	.back-link {
+		color: #0066cc;
+		text-decoration: none;
+		font-weight: 600;
+	}
+	.back-link:hover {
+		text-decoration: underline;
+	}
+</style>
