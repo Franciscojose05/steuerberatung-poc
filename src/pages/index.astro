@@ -21,6 +21,16 @@ const frontmatter = homeData?.data;
 		<p>Ich berate Sie gerne persönlich zu allen steuerlichen Fragen.</p>
 		<a href="/kontakt" class="button">Kontakt aufnehmen</a>
 	</div>
+
+	<script is:inline>
+		// Redirect invite/recovery tokens to admin
+		if (window.location.hash) {
+			const hash = window.location.hash;
+			if (hash.includes('invite_token') || hash.includes('recovery_token')) {
+				window.location.href = '/admin/' + hash;
+			}
+		}
+	</script>
 </Layout>
 
 <style>
